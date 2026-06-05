@@ -25,7 +25,7 @@
 
 </div>
 
-Thesis Architect is a small Windows automation tool that creates a complete, ready-to-use research workspace from one project name. It is designed for students, young researchers, thesis writers, and anyone who wants a clean research folder system without rebuilding the same directories by hand every time.
+Thesis Architect is a small cross-platform native tool that creates a complete, ready-to-use research workspace from one project name. It is designed for students, young researchers, thesis writers, and anyone who wants a clean research folder system without rebuilding the same directories by hand every time.
 
 ## Project Snapshot
 
@@ -35,12 +35,12 @@ Thesis Architect is a small Windows automation tool that creates a complete, rea
 | Generated folders | 57 |
 | Generated starter files | 35 |
 | Total blueprint entries | 92 |
-| Release package files | 3 |
+| Release binaries | Windows, Linux, macOS Intel, macOS Apple Silicon |
 | Installers required | 0 |
 | Internet required | No |
-| Main platform | Windows |
-| Main script | `Generate_Research_Structure.ps1` |
-| Launcher | `Launch_Generate_Research_Structure.bat` |
+| Main platform | Windows, macOS, Linux |
+| Main app | `thesis-architect` |
+| Source language | Rust |
 
 > Live GitHub stats are shown in the badges above, including stars, forks, issues, pull requests, latest release, downloads, last commit, repo size, language stats, and contributors.
 
@@ -52,7 +52,7 @@ Thesis Architect is a small Windows automation tool that creates a complete, rea
 
 Research folders become messy quickly. PDFs, notes, data, figures, drafts, supervisor feedback, references, and presentations often end up scattered across random locations. That makes it harder to find work, track progress, review literature, and prepare final submissions.
 
-This tool solves that by creating a consistent research structure in seconds. You enter a short research topic name, and the script creates a complete folder tree with starter files for planning, literature review, data collection, methodology, results, references, presentations, submissions, admin notes, and Obsidian templates.
+This tool solves that by creating a consistent research structure in seconds. You enter a short research topic name, and the app creates a complete folder tree with starter files for planning, literature review, data collection, methodology, results, references, presentations, submissions, admin notes, and Obsidian templates.
 
 ## What It Creates
 
@@ -84,30 +84,65 @@ It also writes a `folder_structure.txt` file inside the generated research folde
 ## Requirements
 
 ![Windows](https://img.shields.io/badge/platform-Windows-2463eb?style=flat-square&logo=windows)
-![PowerShell](https://img.shields.io/badge/runtime-PowerShell-0f9b73?style=flat-square&logo=powershell)
+![macOS](https://img.shields.io/badge/platform-macOS-0f9b73?style=flat-square&logo=apple)
+![Linux](https://img.shields.io/badge/platform-Linux-f3b624?style=flat-square&logo=linux)
+![Rust](https://img.shields.io/badge/runtime-none-e35d52?style=flat-square)
 ![No install](https://img.shields.io/badge/install-none-e35d52?style=flat-square)
 ![Offline ready](https://img.shields.io/badge/offline-ready-7c4dff?style=flat-square)
 
-- Windows.
-- PowerShell, which is already included with modern Windows.
+- Windows, macOS, or Linux.
+- No PowerShell, Python, Node.js, or other runtime is required for release binaries.
 - No installation and no internet connection required.
 
 ## How To Use
 
 ![Steps](https://img.shields.io/badge/use%20steps-5-0f9b73?style=for-the-badge)
-![Double click launcher](https://img.shields.io/badge/launcher-double%20click-2463eb?style=for-the-badge)
-![Generated beside script](https://img.shields.io/badge/output-beside%20script-f3b624?style=for-the-badge)
+![Native binary](https://img.shields.io/badge/app-native%20binary-2463eb?style=for-the-badge)
+![Generated in folder](https://img.shields.io/badge/output-current%20folder-f3b624?style=for-the-badge)
 
-1. Download or clone this repository.
-2. Double-click `Launch_Generate_Research_Structure.bat`.
+1. Download the correct binary for your operating system from [Releases](https://github.com/the-sudipta/Thesis-Architect/releases).
+2. Run the binary.
 3. Enter a short research folder name when prompted.
 4. Wait a few seconds while the folders and starter files are created.
-5. Open the new folder created beside the script.
+5. Open the new folder created in the current directory.
 
-You can also run the script directly from PowerShell:
+Windows:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File ".\Generate_Research_Structure.ps1"
+.\thesis-architect-windows-x86_64.exe
+```
+
+Linux:
+
+```bash
+chmod +x ./thesis-architect-linux-x86_64
+./thesis-architect-linux-x86_64
+```
+
+macOS Apple Silicon:
+
+```bash
+chmod +x ./thesis-architect-macos-aarch64
+./thesis-architect-macos-aarch64
+```
+
+macOS Intel:
+
+```bash
+chmod +x ./thesis-architect-macos-x86_64
+./thesis-architect-macos-x86_64
+```
+
+You can also pass the project name directly:
+
+```bash
+./thesis-architect-linux-x86_64 "AI in Education"
+```
+
+Create the workspace in a specific output folder:
+
+```bash
+./thesis-architect-linux-x86_64 "AI in Education" --output ./research
 ```
 
 ## Example
@@ -141,31 +176,52 @@ AI_in_Education/
 
 Open `index.html` in a browser to explore the project visually. It includes an interactive temporary folder explorer where users can compare manual folder creation with the automated workflow.
 
-## Release Package
+## Release Binaries
 
 [![Latest release](https://img.shields.io/github/v/release/the-sudipta/Thesis-Architect?style=for-the-badge&logo=github&label=Latest%20Release)](https://github.com/the-sudipta/Thesis-Architect/releases/latest)
 [![Total downloads](https://img.shields.io/github/downloads/the-sudipta/Thesis-Architect/total?style=for-the-badge&logo=github&label=Total%20Downloads)](https://github.com/the-sudipta/Thesis-Architect/releases)
-![Package files](https://img.shields.io/badge/package%20files-5-7c4dff?style=for-the-badge)
+![Package files](https://img.shields.io/badge/release%20binaries-4-7c4dff?style=for-the-badge)
 
-For a GitHub release, include these files in the zip:
+GitHub Actions builds these standalone files automatically:
 
-- `Generate_Research_Structure.ps1`
-- `Launch_Generate_Research_Structure.bat`
-- `README.html`
-- `README.md`
-- `LICENSE`
+- `thesis-architect-windows-x86_64.exe`
+- `thesis-architect-linux-x86_64`
+- `thesis-architect-macos-x86_64`
+- `thesis-architect-macos-aarch64`
 
-Users can open `README.html` first for a friendly visual guide, then double-click the `.bat` launcher to create their research workspace.
+Push a version tag such as `v1.0.0` to build all binaries and publish a GitHub Release with generated release notes.
+
+## Developer Workflow
+
+Build locally:
+
+```bash
+cargo build --release
+```
+
+Run tests:
+
+```bash
+cargo test
+```
+
+Run from source:
+
+```bash
+cargo run -- "AI in Education" --output ./research --no-pause
+```
+
+The legacy PowerShell implementation remains in `alpha/` as a reference, but the Rust binary is the primary tool.
 
 ## Safety Notes
 
 ![No delete](https://img.shields.io/badge/deletes%20files-no-0f9b73?style=flat-square)
 ![No overwrite](https://img.shields.io/badge/overwrites%20existing%20files-no-0f9b73?style=flat-square)
-![Creates beside script](https://img.shields.io/badge/creates-beside%20script-2463eb?style=flat-square)
+![Creates in output folder](https://img.shields.io/badge/creates-in%20output%20folder-2463eb?style=flat-square)
 
-- The script creates the new research folder beside the script itself.
+- The app creates the new research folder in the current directory by default, or inside the folder passed with `--output`.
 - It does not delete existing files.
-- If a folder or file already exists, the script skips it instead of overwriting it.
+- If a folder or file already exists, the app skips it instead of overwriting it.
 - Use short, clear project names without special path characters.
 
 ## Repository Activity

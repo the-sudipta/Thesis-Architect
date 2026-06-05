@@ -783,9 +783,9 @@
     <canvas id="heroScene" aria-hidden="true"></canvas>
     <div class="shell hero-inner">
       <div>
-        <span class="eyebrow">Windows research folder automation</span>
+        <span class="eyebrow">Cross-platform research folder automation</span>
         <h1>Thesis Architect</h1>
-        <p class="hero-copy">A one-click PowerShell tool that turns a short research topic name into a clean, complete, Obsidian-friendly workspace for literature, data, analysis, writing, references, submissions, and admin work.</p>
+        <p class="hero-copy">A standalone native app that turns a short research topic name into a clean, complete, Obsidian-friendly workspace for literature, data, analysis, writing, references, submissions, and admin work.</p>
         <div class="hero-actions">
           <a class="btn alt" href="#playground">Try the folder playground</a>
           <a class="btn light" href="#how">See setup steps</a>
@@ -849,7 +849,7 @@
       <div class="shell">
         <p class="section-kicker">The answer</p>
         <h2 class="section-title">One topic name becomes a complete workspace.</h2>
-        <p class="section-copy">The script creates numbered research sections, starter Markdown notes, BibTeX files, an Obsidian canvas, reusable templates, and a plain-text structure map. It skips anything already present, so rerunning it is gentle on existing work.</p>
+        <p class="section-copy">The app creates numbered research sections, starter Markdown notes, BibTeX files, an Obsidian canvas, reusable templates, and a plain-text structure map. It skips anything already present, so rerunning it is gentle on existing work.</p>
         <div class="comparison" aria-label="Manual setup compared with automated setup">
           <article class="lane">
             <h3>Manual setup</h3>
@@ -869,7 +869,7 @@
       <div class="shell">
         <p class="section-kicker">Interactive playground</p>
         <h2 class="section-title">Build folders manually, then let the automation take over.</h2>
-        <p class="section-copy">This browser explorer is temporary. It lets visitors practice the idea without writing to disk, then see exactly what the real script will create on Windows.</p>
+        <p class="section-copy">This browser explorer is temporary. It lets visitors practice the idea without writing to disk, then see exactly what the real native app will create on Windows, macOS, or Linux.</p>
 
         <div class="app-panel">
           <aside class="toolbox">
@@ -910,7 +910,7 @@
                 </select>
               </div>
               <div class="action-grid">
-                <button class="btn alt small" id="runAutomation" type="button">Run script preview</button>
+                <button class="btn alt small" id="runAutomation" type="button">Run app preview</button>
                 <button class="btn light small" id="stopAutomation" type="button">Stop</button>
               </div>
             </div>
@@ -926,7 +926,7 @@
               <div class="stat"><strong id="percentDone">0%</strong><span>built</span></div>
             </div>
 
-            <p class="hint">The real Windows script creates the selected research folder beside `Generate_Research_Structure.ps1` and writes starter content into important files.</p>
+            <p class="hint">The real app creates the selected research folder in the current output folder and writes starter content into important files.</p>
           </aside>
 
           <section class="explorer" aria-label="Temporary folder explorer">
@@ -950,15 +950,15 @@
     <section id="how">
       <div class="shell">
         <p class="section-kicker">How to use it</p>
-        <h2 class="section-title">The release zip is simple on purpose.</h2>
+        <h2 class="section-title">The release binaries are simple on purpose.</h2>
         <div class="timeline">
           <article class="timeline-step" data-step="1">
             <b>Download</b>
-            <p>Get the release zip from GitHub and extract it into a normal folder.</p>
+            <p>Get the right standalone binary for your operating system from GitHub Releases.</p>
           </article>
           <article class="timeline-step" data-step="2">
             <b>Launch</b>
-            <p>Double-click `Launch_Generate_Research_Structure.bat`.</p>
+            <p>Run `thesis-architect` or double-click the Windows `.exe`.</p>
           </article>
           <article class="timeline-step" data-step="3">
             <b>Name</b>
@@ -966,7 +966,7 @@
           </article>
           <article class="timeline-step" data-step="4">
             <b>Open</b>
-            <p>Find the new research folder beside the script.</p>
+            <p>Find the new research folder in the current output folder.</p>
           </article>
           <article class="timeline-step" data-step="5">
             <b>Work</b>

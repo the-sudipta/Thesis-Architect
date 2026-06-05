@@ -1,0 +1,12 @@
+[package]
+name = "thesis-architect"
+version = "1.1.0"
+edition = "2021"
+description = "Create a complete thesis and research workspace from one project name."
+license = "MIT"
+repository = "https://github.com/the-sudipta/Thesis-Architect"
+
+[profile.release]
+codegen-units = 1
+lto = true
+strip = true

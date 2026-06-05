@@ -1,0 +1,95 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: windows-x86_64
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact_name: thesis-architect.exe
+            asset_name: thesis-architect-windows-x86_64.exe
+          - name: linux-x86_64
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact_name: thesis-architect
+            asset_name: thesis-architect-linux-x86_64
+          - name: macos-x86_64
+            os: macos-latest
+            target: x86_64-apple-darwin
+            artifact_name: thesis-architect
+            asset_name: thesis-architect-macos-x86_64
+          - name: macos-aarch64
+            os: macos-latest
+            target: aarch64-apple-darwin
+            artifact_name: thesis-architect
+            asset_name: thesis-architect-macos-aarch64
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust target
+        run: rustup target add ${{ matrix.target }}
+
+      - name: Build
+        run: cargo build --release --locked --target ${{ matrix.target }}
+
+      - name: Prepare artifact
+        shell: bash
+        run: |
+          mkdir -p dist
+          cp "target/${{ matrix.target }}/release/${{ matrix.artifact_name }}" "dist/${{ matrix.asset_name }}"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset_name }}
+          path: dist/${{ matrix.asset_name }}
+          if-no-files-found: error
+
+  release:
+    name: Publish GitHub Release
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Thesis Architect ${{ github.ref_name }}
+          body: |
+            Native cross-platform release of Thesis Architect.
+
+            This release includes standalone binaries for Windows, Linux, macOS Intel, and macOS Apple Silicon. No PowerShell, Python, Node.js, or installation runtime is required.
+
+            Download the file that matches your operating system:
+
+            - Windows: `thesis-architect-windows-x86_64.exe`
+            - Linux: `thesis-architect-linux-x86_64`
+            - macOS Intel: `thesis-architect-macos-x86_64`
+            - macOS Apple Silicon: `thesis-architect-macos-aarch64`
+
+            The app creates the complete 57-folder, 35-starter-file thesis workspace and safely skips existing files instead of overwriting them.
+          files: dist/*
+          generate_release_notes: true
