@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Thesis Architect</title>
+  <link rel="icon" href="assets/thesis-architect-icon.svg" type="image/svg+xml">
   <style>
     :root {
       color-scheme: light;
@@ -68,11 +69,8 @@
     .brand-mark {
       width: 36px;
       height: 36px;
-      border-radius: 8px;
-      background:
-        linear-gradient(145deg, var(--gold) 0 46%, transparent 47%),
-        linear-gradient(145deg, #ffd972 0 42%, var(--green) 43%);
-      box-shadow: inset 0 -7px 0 rgba(0, 0, 0, .08);
+      display: block;
+      flex: 0 0 auto;
     }
 
     .nav-links {
@@ -768,7 +766,7 @@
 <body>
   <header class="topbar">
     <nav class="shell nav" aria-label="Main navigation">
-      <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>Thesis Architect</span></div>
+      <div class="brand"><img class="brand-mark" src="assets/thesis-architect-icon.svg" alt="" aria-hidden="true"><span>Thesis Architect</span></div>
       <div class="nav-links">
         <a href="#problem">Problem</a>
         <a href="#solution">Solution</a>

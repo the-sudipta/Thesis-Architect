@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/thesis-architect-icon.svg" alt="Thesis Architect icon" width="120">
+
 # Thesis Architect
 
 ### Build a complete thesis and research workspace in seconds.
