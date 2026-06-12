@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/thesis-architect-icon.svg" alt="Thesis Architect icon" width="120">
+<img src="assets/icons/app-icon-256.png" alt="Thesis Architect icon" width="140">
 
 # Thesis Architect
 
@@ -102,8 +102,8 @@ It also writes a `folder_structure.txt` file inside the generated research folde
 ![Native binary](https://img.shields.io/badge/app-native%20binary-2463eb?style=for-the-badge)
 ![Generated in folder](https://img.shields.io/badge/output-current%20folder-f3b624?style=for-the-badge)
 
-1. Download the correct binary for your operating system from [Releases](https://github.com/the-sudipta/Thesis-Architect/releases).
-2. Run the binary.
+1. Download the correct package for your operating system from [Releases](https://github.com/the-sudipta/Thesis-Architect/releases).
+2. Run the app or binary.
 3. Enter a short research folder name when prompted.
 4. Wait a few seconds while the folders and starter files are created.
 5. Open the new folder created in the current directory.
@@ -117,34 +117,35 @@ Windows:
 Linux:
 
 ```bash
-chmod +x ./thesis-architect-linux-x86_64
-./thesis-architect-linux-x86_64
+tar -xzf thesis-architect-linux-x86_64.tar.gz
+cd thesis-architect-linux-x86_64
+./thesis-architect
 ```
 
 macOS Apple Silicon:
 
 ```bash
-chmod +x ./thesis-architect-macos-aarch64
-./thesis-architect-macos-aarch64
+unzip thesis-architect-macos-aarch64.app.zip
+./Thesis\ Architect.app/Contents/MacOS/thesis-architect
 ```
 
 macOS Intel:
 
 ```bash
-chmod +x ./thesis-architect-macos-x86_64
-./thesis-architect-macos-x86_64
+unzip thesis-architect-macos-x86_64.app.zip
+./Thesis\ Architect.app/Contents/MacOS/thesis-architect
 ```
 
 You can also pass the project name directly:
 
 ```bash
-./thesis-architect-linux-x86_64 "AI in Education"
+./thesis-architect "AI in Education"
 ```
 
 Create the workspace in a specific output folder:
 
 ```bash
-./thesis-architect-linux-x86_64 "AI in Education" --output ./research
+./thesis-architect "AI in Education" --output ./research
 ```
 
 ## Example
@@ -184,14 +185,14 @@ Open `index.html` in a browser to explore the project visually. It includes an i
 [![Total downloads](https://img.shields.io/github/downloads/the-sudipta/Thesis-Architect/total?style=for-the-badge&logo=github&label=Total%20Downloads)](https://github.com/the-sudipta/Thesis-Architect/releases)
 ![Package files](https://img.shields.io/badge/release%20binaries-4-7c4dff?style=for-the-badge)
 
-GitHub Actions builds these standalone files automatically:
+GitHub Actions builds these icon-aware release files automatically:
 
-- `thesis-architect-windows-x86_64.exe`
-- `thesis-architect-linux-x86_64`
-- `thesis-architect-macos-x86_64`
-- `thesis-architect-macos-aarch64`
+- `thesis-architect-windows-x86_64.exe` with the icon embedded in the executable.
+- `thesis-architect-linux-x86_64.tar.gz` with the binary, PNG icon, and `.desktop` launcher.
+- `thesis-architect-macos-x86_64.app.zip` with a Finder-visible `.app` icon.
+- `thesis-architect-macos-aarch64.app.zip` with a Finder-visible `.app` icon.
 
-Push a version tag such as `v1.0.0` to build all binaries and publish a GitHub Release with generated release notes.
+Push a version tag such as `v1.2.0` to build all packages and publish a GitHub Release with generated release notes.
 
 ## Developer Workflow
 

@@ -1,10 +1,13 @@
 [package]
 name = "thesis-architect"
-version = "1.1.0"
+version = "1.2.0"
 edition = "2021"
 description = "Create a complete thesis and research workspace from one project name."
 license = "MIT"
 repository = "https://github.com/the-sudipta/Thesis-Architect"
+
+[target.'cfg(windows)'.build-dependencies]
+winresource = "0.1"
 
 [profile.release]
 codegen-units = 1

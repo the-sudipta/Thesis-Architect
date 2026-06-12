@@ -26,17 +26,17 @@ jobs:
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             artifact_name: thesis-architect
-            asset_name: thesis-architect-linux-x86_64
+            asset_name: thesis-architect-linux-x86_64.tar.gz
           - name: macos-x86_64
             os: macos-latest
             target: x86_64-apple-darwin
             artifact_name: thesis-architect
-            asset_name: thesis-architect-macos-x86_64
+            asset_name: thesis-architect-macos-x86_64.app.zip
           - name: macos-aarch64
             os: macos-latest
             target: aarch64-apple-darwin
             artifact_name: thesis-architect
-            asset_name: thesis-architect-macos-aarch64
+            asset_name: thesis-architect-macos-aarch64.app.zip
 
     steps:
       - name: Checkout
@@ -52,7 +52,66 @@ jobs:
         shell: bash
         run: |
           mkdir -p dist
-          cp "target/${{ matrix.target }}/release/${{ matrix.artifact_name }}" "dist/${{ matrix.asset_name }}"
+          binary="target/${{ matrix.target }}/release/${{ matrix.artifact_name }}"
+
+          if [[ "${{ matrix.name }}" == windows-* ]]; then
+            cp "$binary" "dist/${{ matrix.asset_name }}"
+          elif [[ "${{ matrix.name }}" == linux-* ]]; then
+            package_dir="dist/thesis-architect-linux-x86_64"
+            mkdir -p "$package_dir/icons"
+            cp "$binary" "$package_dir/thesis-architect"
+            cp "assets/icons/app-icon-256.png" "$package_dir/icons/thesis-architect.png"
+            chmod +x "$package_dir/thesis-architect"
+            cat > "$package_dir/thesis-architect.desktop" <<'DESKTOP'
+          [Desktop Entry]
+          Type=Application
+          Name=Thesis Architect
+          Comment=Create a complete thesis and research workspace
+          Exec=thesis-architect
+          Icon=thesis-architect
+          Terminal=true
+          Categories=Office;Education;Utility;
+          DESKTOP
+            cat > "$package_dir/README.txt" <<'LINUXREADME'
+          Thesis Architect for Linux
+
+          Run ./thesis-architect from a terminal.
+
+          To use the icon in a desktop environment, install the included thesis-architect.desktop launcher and icons/thesis-architect.png according to your desktop environment's launcher rules.
+          LINUXREADME
+            tar -C dist -czf "dist/${{ matrix.asset_name }}" "thesis-architect-linux-x86_64"
+          else
+            app_dir="dist/Thesis Architect.app"
+            mkdir -p "$app_dir/Contents/MacOS" "$app_dir/Contents/Resources"
+            cp "$binary" "$app_dir/Contents/MacOS/thesis-architect"
+            cp "assets/app-icon.icns" "$app_dir/Contents/Resources/AppIcon.icns"
+            chmod +x "$app_dir/Contents/MacOS/thesis-architect"
+            cat > "$app_dir/Contents/Info.plist" <<'PLIST'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>CFBundleName</key>
+            <string>Thesis Architect</string>
+            <key>CFBundleDisplayName</key>
+            <string>Thesis Architect</string>
+            <key>CFBundleIdentifier</key>
+            <string>com.thesisarchitect.cli</string>
+            <key>CFBundleVersion</key>
+            <string>${{ github.ref_name }}</string>
+            <key>CFBundleShortVersionString</key>
+            <string>${{ github.ref_name }}</string>
+            <key>CFBundleExecutable</key>
+            <string>thesis-architect</string>
+            <key>CFBundleIconFile</key>
+            <string>AppIcon</string>
+            <key>LSApplicationCategoryType</key>
+            <string>public.app-category.productivity</string>
+          </dict>
+          </plist>
+          PLIST
+            (cd dist && zip -qry "${{ matrix.asset_name }}" "Thesis Architect.app")
+          fi
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -81,14 +140,14 @@ jobs:
           body: |
             Native cross-platform release of Thesis Architect.
 
-            This release includes standalone binaries for Windows, Linux, macOS Intel, and macOS Apple Silicon. No PowerShell, Python, Node.js, or installation runtime is required.
+            This release includes native builds for Windows, Linux, macOS Intel, and macOS Apple Silicon. No PowerShell, Python, Node.js, or installation runtime is required.
 
             Download the file that matches your operating system:
 
-            - Windows: `thesis-architect-windows-x86_64.exe`
-            - Linux: `thesis-architect-linux-x86_64`
-            - macOS Intel: `thesis-architect-macos-x86_64`
-            - macOS Apple Silicon: `thesis-architect-macos-aarch64`
+            - Windows: `thesis-architect-windows-x86_64.exe` with embedded app icon
+            - Linux: `thesis-architect-linux-x86_64.tar.gz` with binary, desktop launcher, and icon
+            - macOS Intel: `thesis-architect-macos-x86_64.app.zip` with Finder app icon
+            - macOS Apple Silicon: `thesis-architect-macos-aarch64.app.zip` with Finder app icon
 
             The app creates the complete 57-folder, 35-starter-file thesis workspace and safely skips existing files instead of overwriting them.
           files: dist/*
